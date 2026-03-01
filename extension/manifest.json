@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Recipe Shopping - Tesco Basket",
+  "version": "1.0",
+  "description": "Automatically adds recipe ingredients to your Tesco basket",
+  "permissions": ["activeTab", "scripting", "tabs"],
+  "host_permissions": [
+    "https://www.tesco.com/*",
+    "http://localhost:3000/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://localhost:3000/*"],
+      "js": ["content.js"]
+    }
+  ]
+}

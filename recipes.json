@@ -1,0 +1,459 @@
+[
+  {
+    "name": "Fragrant Lamb Curry",
+    "description": "A warming midweek curry with tender lamb",
+    "servings": 4,
+    "ingredients": [
+      { "name": "lamb neck fillet", "quantity": "500", "unit": "g", "category": "meat" },
+      { "name": "onion", "quantity": "2", "unit": "", "category": "vegetable" },
+      { "name": "garlic cloves", "quantity": "3", "unit": "", "category": "vegetable" },
+      { "name": "fresh ginger", "quantity": "1", "unit": "thumb-sized piece", "category": "vegetable" },
+      { "name": "400g tin chopped tomatoes", "quantity": "1", "unit": "", "category": "pantry" },
+      { "name": "coconut milk", "quantity": "400", "unit": "ml", "category": "pantry" },
+      { "name": "ground cumin", "quantity": "1", "unit": "tsp", "category": "spice" },
+      { "name": "ground coriander", "quantity": "1", "unit": "tsp", "category": "spice" },
+      { "name": "garam masala", "quantity": "1", "unit": "tsp", "category": "spice" },
+      { "name": "turmeric", "quantity": "0.5", "unit": "tsp", "category": "spice" },
+      { "name": "basmati rice", "quantity": "300", "unit": "g", "category": "pantry" },
+      { "name": "vegetable oil", "quantity": "2", "unit": "tbsp", "category": "pantry" },
+      { "name": "salt", "quantity": "1", "unit": "tsp", "category": "pantry" },
+      { "name": "fresh coriander", "quantity": "1", "unit": "small bunch", "category": "vegetable" }
+    ],
+    "method": [
+      "Cut the lamb into bite-sized chunks. Dice the onions, mince the garlic, and grate the ginger.",
+      "Heat the oil in a large pan over medium-high heat. Brown the lamb in batches and set aside.",
+      "In the same pan, cook the onions for 5 minutes until soft. Add garlic, ginger, cumin, coriander, turmeric, and garam masala. Stir for 1 minute.",
+      "Return the lamb to the pan. Add the chopped tomatoes and coconut milk. Stir well.",
+      "Bring to a simmer, cover, and cook on low heat for 1.5 hours until the lamb is tender.",
+      "Cook the basmati rice according to packet instructions.",
+      "Season the curry with salt to taste and serve over rice, topped with fresh coriander."
+    ]
+  },
+  {
+    "name": "Classic Spaghetti Bolognese",
+    "description": "A rich, slow-cooked family favourite",
+    "servings": 4,
+    "ingredients": [
+      { "name": "beef mince", "quantity": "500", "unit": "g", "category": "meat" },
+      { "name": "onion", "quantity": "1", "unit": "large", "category": "vegetable" },
+      { "name": "carrot", "quantity": "2", "unit": "", "category": "vegetable" },
+      { "name": "celery stick", "quantity": "2", "unit": "", "category": "vegetable" },
+      { "name": "garlic cloves", "quantity": "3", "unit": "", "category": "vegetable" },
+      { "name": "400g tin chopped tomatoes", "quantity": "2", "unit": "", "category": "pantry" },
+      { "name": "tomato puree", "quantity": "2", "unit": "tbsp", "category": "pantry" },
+      { "name": "dried oregano", "quantity": "1", "unit": "tsp", "category": "spice" },
+      { "name": "spaghetti", "quantity": "400", "unit": "g", "category": "pantry" },
+      { "name": "parmesan cheese", "quantity": "50", "unit": "g", "category": "dairy" },
+      { "name": "olive oil", "quantity": "2", "unit": "tbsp", "category": "pantry" },
+      { "name": "salt", "quantity": "1", "unit": "tsp", "category": "pantry" },
+      { "name": "black pepper", "quantity": "0.5", "unit": "tsp", "category": "spice" }
+    ],
+    "method": [
+      "Finely dice the onion, carrot, and celery. Mince the garlic.",
+      "Heat olive oil in a large pan. Cook the mince over high heat until browned, breaking it up as it cooks. Remove and set aside.",
+      "In the same pan, soften the onion, carrot, and celery for 8 minutes. Add garlic and cook for 1 minute.",
+      "Return the mince to the pan. Add chopped tomatoes, tomato puree, oregano, salt, and pepper.",
+      "Simmer uncovered on low heat for 45 minutes, stirring occasionally.",
+      "Cook spaghetti according to packet instructions. Drain and toss with the sauce.",
+      "Serve with grated parmesan on top."
+    ]
+  },
+  {
+    "name": "Chicken Fajitas",
+    "description": "Quick and fun - everyone builds their own",
+    "servings": 4,
+    "ingredients": [
+      { "name": "chicken breast", "quantity": "4", "unit": "", "category": "meat" },
+      { "name": "red pepper", "quantity": "2", "unit": "", "category": "vegetable" },
+      { "name": "yellow pepper", "quantity": "1", "unit": "", "category": "vegetable" },
+      { "name": "red onion", "quantity": "1", "unit": "large", "category": "vegetable" },
+      { "name": "flour tortillas", "quantity": "8", "unit": "", "category": "pantry" },
+      { "name": "smoked paprika", "quantity": "1", "unit": "tsp", "category": "spice" },
+      { "name": "ground cumin", "quantity": "1", "unit": "tsp", "category": "spice" },
+      { "name": "chilli powder", "quantity": "0.5", "unit": "tsp", "category": "spice" },
+      { "name": "lime", "quantity": "1", "unit": "", "category": "fruit" },
+      { "name": "soured cream", "quantity": "150", "unit": "ml", "category": "dairy" },
+      { "name": "cheddar cheese", "quantity": "100", "unit": "g", "category": "dairy" },
+      { "name": "olive oil", "quantity": "2", "unit": "tbsp", "category": "pantry" }
+    ],
+    "method": [
+      "Slice the chicken into strips. Mix with paprika, cumin, chilli powder, juice of half the lime, and a pinch of salt.",
+      "Slice the peppers and onion into strips.",
+      "Heat olive oil in a large frying pan over high heat. Cook the chicken for 5-6 minutes until cooked through. Remove and set aside.",
+      "In the same pan, cook the peppers and onion for 4-5 minutes until slightly charred.",
+      "Return the chicken to the pan and toss together.",
+      "Warm the tortillas in a dry pan or microwave.",
+      "Serve with grated cheddar, soured cream, and lime wedges."
+    ]
+  },
+  {
+    "name": "Creamy Tomato Pasta Bake",
+    "description": "Comforting cheesy pasta the kids will love",
+    "servings": 4,
+    "ingredients": [
+      { "name": "penne pasta", "quantity": "400", "unit": "g", "category": "pantry" },
+      { "name": "400g tin chopped tomatoes", "quantity": "2", "unit": "", "category": "pantry" },
+      { "name": "cream cheese", "quantity": "200", "unit": "g", "category": "dairy" },
+      { "name": "cheddar cheese", "quantity": "150", "unit": "g", "category": "dairy" },
+      { "name": "onion", "quantity": "1", "unit": "", "category": "vegetable" },
+      { "name": "garlic cloves", "quantity": "2", "unit": "", "category": "vegetable" },
+      { "name": "dried basil", "quantity": "1", "unit": "tsp", "category": "spice" },
+      { "name": "olive oil", "quantity": "1", "unit": "tbsp", "category": "pantry" },
+      { "name": "salt", "quantity": "1", "unit": "tsp", "category": "pantry" },
+      { "name": "black pepper", "quantity": "0.5", "unit": "tsp", "category": "spice" }
+    ],
+    "method": [
+      "Preheat oven to 190°C / 170°C fan / gas 5.",
+      "Cook pasta according to packet instructions, drain.",
+      "Dice the onion and mince the garlic. Soften in olive oil for 5 minutes.",
+      "Add chopped tomatoes, cream cheese, basil, salt, and pepper. Stir until the cream cheese melts.",
+      "Combine the sauce with pasta and pour into a baking dish.",
+      "Top with grated cheddar and bake for 20 minutes until golden and bubbling."
+    ]
+  },
+  {
+    "name": "Fish Pie",
+    "description": "Classic British comfort food with a creamy mash topping",
+    "servings": 4,
+    "ingredients": [
+      { "name": "salmon fillet", "quantity": "250", "unit": "g", "category": "meat" },
+      { "name": "smoked haddock fillet", "quantity": "250", "unit": "g", "category": "meat" },
+      { "name": "raw king prawns", "quantity": "150", "unit": "g", "category": "meat" },
+      { "name": "potatoes", "quantity": "800", "unit": "g", "category": "vegetable" },
+      { "name": "butter", "quantity": "50", "unit": "g", "category": "dairy" },
+      { "name": "plain flour", "quantity": "30", "unit": "g", "category": "pantry" },
+      { "name": "whole milk", "quantity": "500", "unit": "ml", "category": "dairy" },
+      { "name": "frozen peas", "quantity": "100", "unit": "g", "category": "vegetable" },
+      { "name": "fresh parsley", "quantity": "1", "unit": "small bunch", "category": "vegetable" },
+      { "name": "cheddar cheese", "quantity": "50", "unit": "g", "category": "dairy" },
+      { "name": "salt", "quantity": "1", "unit": "tsp", "category": "pantry" }
+    ],
+    "method": [
+      "Preheat oven to 200°C / 180°C fan / gas 6. Peel and chop the potatoes, boil until tender, then mash with half the butter and a splash of milk.",
+      "Cut the salmon and haddock into chunks.",
+      "Melt the remaining butter in a saucepan. Stir in the flour and cook for 1 minute. Gradually add the milk, stirring constantly until you have a smooth white sauce.",
+      "Add the fish, prawns, peas, and chopped parsley to the sauce. Pour into a baking dish.",
+      "Spoon the mash over the top and rough up with a fork. Scatter grated cheddar over.",
+      "Bake for 25-30 minutes until golden on top and bubbling at the edges."
+    ]
+  },
+  {
+    "name": "Vegetable Stir Fry with Noodles",
+    "description": "A quick and healthy weeknight dinner",
+    "servings": 4,
+    "ingredients": [
+      { "name": "egg noodles", "quantity": "300", "unit": "g", "category": "pantry" },
+      { "name": "broccoli", "quantity": "1", "unit": "head", "category": "vegetable" },
+      { "name": "red pepper", "quantity": "1", "unit": "", "category": "vegetable" },
+      { "name": "carrot", "quantity": "2", "unit": "", "category": "vegetable" },
+      { "name": "pak choi", "quantity": "2", "unit": "", "category": "vegetable" },
+      { "name": "soy sauce", "quantity": "3", "unit": "tbsp", "category": "pantry" },
+      { "name": "sesame oil", "quantity": "1", "unit": "tbsp", "category": "pantry" },
+      { "name": "fresh ginger", "quantity": "1", "unit": "thumb-sized piece", "category": "vegetable" },
+      { "name": "garlic cloves", "quantity": "2", "unit": "", "category": "vegetable" },
+      { "name": "honey", "quantity": "1", "unit": "tbsp", "category": "pantry" },
+      { "name": "vegetable oil", "quantity": "2", "unit": "tbsp", "category": "pantry" },
+      { "name": "sesame seeds", "quantity": "1", "unit": "tbsp", "category": "pantry" }
+    ],
+    "method": [
+      "Cook the noodles according to packet instructions. Drain and toss with sesame oil.",
+      "Cut broccoli into small florets, slice the pepper, julienne the carrots, and halve the pak choi.",
+      "Mix soy sauce, honey, and a splash of water for the sauce.",
+      "Heat vegetable oil in a wok over high heat. Stir fry garlic and ginger for 30 seconds.",
+      "Add broccoli and carrots, stir fry for 3 minutes. Add pepper and pak choi, cook 2 minutes more.",
+      "Add the noodles and sauce, toss everything together for 1 minute.",
+      "Serve sprinkled with sesame seeds."
+    ]
+  },
+  {
+    "name": "Shepherd's Pie",
+    "description": "A hearty classic with lamb mince and veg",
+    "servings": 4,
+    "ingredients": [
+      { "name": "lamb mince", "quantity": "500", "unit": "g", "category": "meat" },
+      { "name": "potatoes", "quantity": "800", "unit": "g", "category": "vegetable" },
+      { "name": "onion", "quantity": "1", "unit": "large", "category": "vegetable" },
+      { "name": "carrot", "quantity": "2", "unit": "", "category": "vegetable" },
+      { "name": "frozen peas", "quantity": "100", "unit": "g", "category": "vegetable" },
+      { "name": "lamb stock cube", "quantity": "1", "unit": "", "category": "pantry" },
+      { "name": "tomato puree", "quantity": "1", "unit": "tbsp", "category": "pantry" },
+      { "name": "Worcestershire sauce", "quantity": "1", "unit": "tbsp", "category": "pantry" },
+      { "name": "butter", "quantity": "40", "unit": "g", "category": "dairy" },
+      { "name": "whole milk", "quantity": "50", "unit": "ml", "category": "dairy" },
+      { "name": "vegetable oil", "quantity": "1", "unit": "tbsp", "category": "pantry" }
+    ],
+    "method": [
+      "Preheat oven to 200°C / 180°C fan / gas 6.",
+      "Peel and chop potatoes, boil until tender, then mash with butter and milk.",
+      "Dice onion and carrot. Heat oil in a pan and brown the lamb mince. Drain excess fat.",
+      "Add onion and carrot, cook for 5 minutes. Stir in tomato puree and Worcestershire sauce.",
+      "Dissolve the stock cube in 300ml boiling water and add to the pan. Simmer for 20 minutes.",
+      "Stir in the peas, then pour into a baking dish. Top with mash and rough up with a fork.",
+      "Bake for 25 minutes until the top is golden."
+    ]
+  },
+  {
+    "name": "Chicken Caesar Salad",
+    "description": "A fresh and filling lunch or light dinner",
+    "servings": 4,
+    "ingredients": [
+      { "name": "chicken breast", "quantity": "3", "unit": "", "category": "meat" },
+      { "name": "romaine lettuce", "quantity": "2", "unit": "hearts", "category": "vegetable" },
+      { "name": "parmesan cheese", "quantity": "50", "unit": "g", "category": "dairy" },
+      { "name": "ciabatta bread", "quantity": "1", "unit": "small", "category": "pantry" },
+      { "name": "mayonnaise", "quantity": "4", "unit": "tbsp", "category": "pantry" },
+      { "name": "lemon", "quantity": "1", "unit": "", "category": "fruit" },
+      { "name": "garlic cloves", "quantity": "1", "unit": "", "category": "vegetable" },
+      { "name": "anchovy fillets", "quantity": "4", "unit": "", "category": "pantry" },
+      { "name": "olive oil", "quantity": "3", "unit": "tbsp", "category": "pantry" },
+      { "name": "salt", "quantity": "0.5", "unit": "tsp", "category": "pantry" },
+      { "name": "black pepper", "quantity": "0.5", "unit": "tsp", "category": "spice" }
+    ],
+    "method": [
+      "Preheat oven to 200°C / 180°C fan. Tear ciabatta into chunks, toss with 1 tbsp olive oil, and bake for 10 minutes until crisp croutons.",
+      "Season chicken with salt and pepper. Heat 1 tbsp olive oil in a pan and cook chicken for 6-7 minutes each side until cooked through. Slice.",
+      "Make the dressing: mash anchovies with garlic, mix with mayo, lemon juice, 1 tbsp olive oil, and grated parmesan.",
+      "Chop the lettuce and arrange on plates. Top with chicken and croutons.",
+      "Drizzle with dressing and shave extra parmesan over the top."
+    ]
+  },
+  {
+    "name": "Thai Green Curry",
+    "description": "Fragrant and creamy with chicken and veg",
+    "servings": 4,
+    "ingredients": [
+      { "name": "chicken thigh fillets", "quantity": "500", "unit": "g", "category": "meat" },
+      { "name": "Thai green curry paste", "quantity": "3", "unit": "tbsp", "category": "pantry" },
+      { "name": "coconut milk", "quantity": "400", "unit": "ml", "category": "pantry" },
+      { "name": "green beans", "quantity": "150", "unit": "g", "category": "vegetable" },
+      { "name": "baby sweetcorn", "quantity": "100", "unit": "g", "category": "vegetable" },
+      { "name": "red pepper", "quantity": "1", "unit": "", "category": "vegetable" },
+      { "name": "fish sauce", "quantity": "1", "unit": "tbsp", "category": "pantry" },
+      { "name": "brown sugar", "quantity": "1", "unit": "tsp", "category": "pantry" },
+      { "name": "fresh basil", "quantity": "1", "unit": "small bunch", "category": "vegetable" },
+      { "name": "jasmine rice", "quantity": "300", "unit": "g", "category": "pantry" },
+      { "name": "vegetable oil", "quantity": "1", "unit": "tbsp", "category": "pantry" }
+    ],
+    "method": [
+      "Cut chicken thighs into chunks. Slice the pepper, trim the green beans, and halve the sweetcorn.",
+      "Heat oil in a wok or large pan. Fry the curry paste for 1 minute until fragrant.",
+      "Add the chicken and stir fry for 3 minutes.",
+      "Pour in the coconut milk, fish sauce, and sugar. Bring to a simmer.",
+      "Add the vegetables and cook for 8-10 minutes until the chicken is cooked through.",
+      "Cook the jasmine rice according to packet instructions.",
+      "Stir in fresh basil leaves and serve over rice."
+    ]
+  },
+  {
+    "name": "Bangers and Mash",
+    "description": "Classic sausages with onion gravy and mash",
+    "servings": 4,
+    "ingredients": [
+      { "name": "pork sausages", "quantity": "8", "unit": "", "category": "meat" },
+      { "name": "potatoes", "quantity": "1", "unit": "kg", "category": "vegetable" },
+      { "name": "onion", "quantity": "2", "unit": "large", "category": "vegetable" },
+      { "name": "beef stock cube", "quantity": "1", "unit": "", "category": "pantry" },
+      { "name": "plain flour", "quantity": "1", "unit": "tbsp", "category": "pantry" },
+      { "name": "butter", "quantity": "50", "unit": "g", "category": "dairy" },
+      { "name": "whole milk", "quantity": "50", "unit": "ml", "category": "dairy" },
+      { "name": "vegetable oil", "quantity": "1", "unit": "tbsp", "category": "pantry" },
+      { "name": "frozen peas", "quantity": "200", "unit": "g", "category": "vegetable" }
+    ],
+    "method": [
+      "Preheat oven to 200°C / 180°C fan. Place sausages on a baking tray and cook for 25 minutes, turning halfway.",
+      "Peel and chop potatoes, boil until tender, then mash with butter and milk.",
+      "Slice the onions. Heat oil in a pan and cook onions on medium-low for 15 minutes until soft and caramelised.",
+      "Stir flour into the onions and cook for 1 minute. Dissolve stock cube in 400ml boiling water and gradually add to the pan, stirring. Simmer for 5 minutes.",
+      "Cook the peas in boiling water for 3 minutes.",
+      "Serve sausages on a pile of mash with onion gravy and peas."
+    ]
+  },
+  {
+    "name": "Homemade Pizza",
+    "description": "Fun to make together - customise your own toppings",
+    "servings": 4,
+    "ingredients": [
+      { "name": "strong white bread flour", "quantity": "500", "unit": "g", "category": "pantry" },
+      { "name": "fast-action dried yeast", "quantity": "7", "unit": "g sachet", "category": "pantry" },
+      { "name": "passata", "quantity": "400", "unit": "g", "category": "pantry" },
+      { "name": "mozzarella cheese", "quantity": "250", "unit": "g", "category": "dairy" },
+      { "name": "pepperoni slices", "quantity": "100", "unit": "g", "category": "meat" },
+      { "name": "mushrooms", "quantity": "100", "unit": "g", "category": "vegetable" },
+      { "name": "red onion", "quantity": "1", "unit": "small", "category": "vegetable" },
+      { "name": "dried oregano", "quantity": "1", "unit": "tsp", "category": "spice" },
+      { "name": "olive oil", "quantity": "2", "unit": "tbsp", "category": "pantry" },
+      { "name": "sugar", "quantity": "1", "unit": "tsp", "category": "pantry" },
+      { "name": "salt", "quantity": "1", "unit": "tsp", "category": "pantry" }
+    ],
+    "method": [
+      "Mix flour, yeast, sugar, salt, olive oil, and 300ml warm water. Knead for 10 minutes until smooth and elastic.",
+      "Cover and leave to rise in a warm place for 1 hour until doubled in size.",
+      "Preheat oven to 240°C / 220°C fan / gas 9. Place a baking tray in the oven to heat.",
+      "Divide dough into 4 balls. Roll each out into a thin circle on a floured surface.",
+      "Spread passata over each base. Top with torn mozzarella, pepperoni, sliced mushrooms, and red onion.",
+      "Sprinkle with oregano. Bake on the hot tray for 10-12 minutes until crisp and golden."
+    ]
+  },
+  {
+    "name": "Beef Chilli Con Carne",
+    "description": "Warming and hearty with rice or nachos",
+    "servings": 4,
+    "ingredients": [
+      { "name": "beef mince", "quantity": "500", "unit": "g", "category": "meat" },
+      { "name": "400g tin chopped tomatoes", "quantity": "1", "unit": "", "category": "pantry" },
+      { "name": "400g tin kidney beans", "quantity": "1", "unit": "", "category": "pantry" },
+      { "name": "onion", "quantity": "1", "unit": "large", "category": "vegetable" },
+      { "name": "garlic cloves", "quantity": "2", "unit": "", "category": "vegetable" },
+      { "name": "red pepper", "quantity": "1", "unit": "", "category": "vegetable" },
+      { "name": "ground cumin", "quantity": "1", "unit": "tsp", "category": "spice" },
+      { "name": "chilli powder", "quantity": "1", "unit": "tsp", "category": "spice" },
+      { "name": "smoked paprika", "quantity": "1", "unit": "tsp", "category": "spice" },
+      { "name": "tomato puree", "quantity": "1", "unit": "tbsp", "category": "pantry" },
+      { "name": "basmati rice", "quantity": "300", "unit": "g", "category": "pantry" },
+      { "name": "soured cream", "quantity": "150", "unit": "ml", "category": "dairy" },
+      { "name": "cheddar cheese", "quantity": "80", "unit": "g", "category": "dairy" },
+      { "name": "olive oil", "quantity": "1", "unit": "tbsp", "category": "pantry" }
+    ],
+    "method": [
+      "Dice the onion and pepper. Mince the garlic.",
+      "Heat oil in a large pan. Brown the mince over high heat, breaking it up. Remove and set aside.",
+      "Cook the onion and pepper for 5 minutes. Add garlic, cumin, chilli powder, and paprika. Cook for 1 minute.",
+      "Return mince to the pan. Add chopped tomatoes, tomato puree, and drained kidney beans.",
+      "Simmer for 30 minutes, stirring occasionally.",
+      "Cook basmati rice according to packet instructions.",
+      "Serve chilli over rice with soured cream and grated cheddar."
+    ]
+  },
+  {
+    "name": "Toad in the Hole",
+    "description": "Golden Yorkshire pudding batter with sausages",
+    "servings": 4,
+    "ingredients": [
+      { "name": "pork sausages", "quantity": "8", "unit": "", "category": "meat" },
+      { "name": "plain flour", "quantity": "130", "unit": "g", "category": "pantry" },
+      { "name": "eggs", "quantity": "3", "unit": "", "category": "dairy" },
+      { "name": "whole milk", "quantity": "225", "unit": "ml", "category": "dairy" },
+      { "name": "vegetable oil", "quantity": "3", "unit": "tbsp", "category": "pantry" },
+      { "name": "onion", "quantity": "2", "unit": "", "category": "vegetable" },
+      { "name": "beef stock cube", "quantity": "1", "unit": "", "category": "pantry" },
+      { "name": "frozen peas", "quantity": "200", "unit": "g", "category": "vegetable" },
+      { "name": "salt", "quantity": "0.5", "unit": "tsp", "category": "pantry" }
+    ],
+    "method": [
+      "Make the batter: whisk flour, eggs, milk, and salt until smooth. Rest for 30 minutes.",
+      "Preheat oven to 220°C / 200°C fan / gas 7.",
+      "Pour oil into a large roasting tin and add the sausages. Place in the oven for 10 minutes until the oil is smoking hot.",
+      "Remove the tin and quickly pour the batter around the sausages. Return to the oven immediately.",
+      "Bake for 30 minutes until puffed up and golden. Do not open the oven door during baking.",
+      "Meanwhile, make onion gravy: slice onions, caramelise in a pan, stir in a little flour, add 400ml stock. Simmer until thickened.",
+      "Cook peas and serve alongside."
+    ]
+  },
+  {
+    "name": "Salmon with New Potatoes and Green Beans",
+    "description": "A light and healthy midweek meal",
+    "servings": 4,
+    "ingredients": [
+      { "name": "salmon fillets", "quantity": "4", "unit": "", "category": "meat" },
+      { "name": "new potatoes", "quantity": "500", "unit": "g", "category": "vegetable" },
+      { "name": "green beans", "quantity": "200", "unit": "g", "category": "vegetable" },
+      { "name": "lemon", "quantity": "1", "unit": "", "category": "fruit" },
+      { "name": "butter", "quantity": "30", "unit": "g", "category": "dairy" },
+      { "name": "fresh dill", "quantity": "1", "unit": "small bunch", "category": "vegetable" },
+      { "name": "olive oil", "quantity": "1", "unit": "tbsp", "category": "pantry" },
+      { "name": "salt", "quantity": "0.5", "unit": "tsp", "category": "pantry" },
+      { "name": "black pepper", "quantity": "0.5", "unit": "tsp", "category": "spice" }
+    ],
+    "method": [
+      "Halve or quarter the new potatoes. Boil for 15 minutes until tender. Add green beans for the last 4 minutes.",
+      "Season salmon with salt, pepper, and a squeeze of lemon.",
+      "Heat olive oil in a frying pan over medium-high heat. Cook salmon skin-side down for 4 minutes, flip and cook 3 minutes more.",
+      "Drain the potatoes and beans. Toss with butter and chopped dill.",
+      "Serve salmon on top with lemon wedges."
+    ]
+  },
+  {
+    "name": "Chicken and Leek Pie",
+    "description": "Creamy chicken filling under golden puff pastry",
+    "servings": 4,
+    "ingredients": [
+      { "name": "chicken thigh fillets", "quantity": "500", "unit": "g", "category": "meat" },
+      { "name": "leeks", "quantity": "2", "unit": "large", "category": "vegetable" },
+      { "name": "ready-rolled puff pastry", "quantity": "1", "unit": "sheet", "category": "pantry" },
+      { "name": "chicken stock cube", "quantity": "1", "unit": "", "category": "pantry" },
+      { "name": "butter", "quantity": "30", "unit": "g", "category": "dairy" },
+      { "name": "plain flour", "quantity": "30", "unit": "g", "category": "pantry" },
+      { "name": "whole milk", "quantity": "300", "unit": "ml", "category": "dairy" },
+      { "name": "Dijon mustard", "quantity": "1", "unit": "tsp", "category": "pantry" },
+      { "name": "egg", "quantity": "1", "unit": "", "category": "dairy" },
+      { "name": "salt", "quantity": "0.5", "unit": "tsp", "category": "pantry" },
+      { "name": "black pepper", "quantity": "0.5", "unit": "tsp", "category": "spice" }
+    ],
+    "method": [
+      "Preheat oven to 200°C / 180°C fan / gas 6.",
+      "Cut chicken into chunks. Trim and slice the leeks.",
+      "Melt butter in a pan. Cook the leeks for 5 minutes until soft. Add the chicken and cook for 5 minutes.",
+      "Stir in flour and cook for 1 minute. Gradually add milk, stirring. Crumble in the stock cube.",
+      "Add mustard, salt, and pepper. Simmer for 5 minutes until thickened. Pour into a pie dish.",
+      "Lay puff pastry over the top, trim edges, and crimp with a fork. Brush with beaten egg.",
+      "Bake for 25-30 minutes until the pastry is golden and puffed."
+    ]
+  },
+  {
+    "name": "Risotto Primavera",
+    "description": "Creamy Italian rice with seasonal vegetables",
+    "servings": 4,
+    "ingredients": [
+      { "name": "arborio risotto rice", "quantity": "300", "unit": "g", "category": "pantry" },
+      { "name": "vegetable stock cubes", "quantity": "2", "unit": "", "category": "pantry" },
+      { "name": "courgette", "quantity": "1", "unit": "", "category": "vegetable" },
+      { "name": "asparagus tips", "quantity": "150", "unit": "g", "category": "vegetable" },
+      { "name": "frozen peas", "quantity": "100", "unit": "g", "category": "vegetable" },
+      { "name": "onion", "quantity": "1", "unit": "", "category": "vegetable" },
+      { "name": "garlic cloves", "quantity": "2", "unit": "", "category": "vegetable" },
+      { "name": "parmesan cheese", "quantity": "60", "unit": "g", "category": "dairy" },
+      { "name": "butter", "quantity": "30", "unit": "g", "category": "dairy" },
+      { "name": "olive oil", "quantity": "1", "unit": "tbsp", "category": "pantry" },
+      { "name": "lemon", "quantity": "1", "unit": "", "category": "fruit" },
+      { "name": "salt", "quantity": "0.5", "unit": "tsp", "category": "pantry" }
+    ],
+    "method": [
+      "Dissolve stock cubes in 1.2 litres of boiling water. Keep warm on the hob.",
+      "Dice the onion and courgette. Mince the garlic. Cut asparagus into short lengths.",
+      "Heat olive oil and half the butter in a wide pan. Soften the onion for 5 minutes.",
+      "Add rice and stir for 1 minute. Add stock a ladleful at a time, stirring and waiting for each to be absorbed before adding the next.",
+      "After 15 minutes, add courgette and asparagus. Continue adding stock for another 5 minutes. Add peas for the last 2 minutes.",
+      "Remove from heat. Stir in remaining butter, grated parmesan, lemon juice, and salt.",
+      "Serve immediately - risotto waits for no one."
+    ]
+  },
+  {
+    "name": "Chicken Katsu Curry",
+    "description": "Crispy chicken with mild Japanese-style curry sauce",
+    "servings": 4,
+    "ingredients": [
+      { "name": "chicken breast", "quantity": "4", "unit": "", "category": "meat" },
+      { "name": "panko breadcrumbs", "quantity": "150", "unit": "g", "category": "pantry" },
+      { "name": "plain flour", "quantity": "50", "unit": "g", "category": "pantry" },
+      { "name": "eggs", "quantity": "2", "unit": "", "category": "dairy" },
+      { "name": "onion", "quantity": "1", "unit": "", "category": "vegetable" },
+      { "name": "garlic cloves", "quantity": "2", "unit": "", "category": "vegetable" },
+      { "name": "fresh ginger", "quantity": "1", "unit": "thumb-sized piece", "category": "vegetable" },
+      { "name": "medium curry powder", "quantity": "2", "unit": "tbsp", "category": "spice" },
+      { "name": "chicken stock cube", "quantity": "1", "unit": "", "category": "pantry" },
+      { "name": "honey", "quantity": "1", "unit": "tbsp", "category": "pantry" },
+      { "name": "soy sauce", "quantity": "1", "unit": "tbsp", "category": "pantry" },
+      { "name": "jasmine rice", "quantity": "300", "unit": "g", "category": "pantry" },
+      { "name": "vegetable oil", "quantity": "4", "unit": "tbsp", "category": "pantry" }
+    ],
+    "method": [
+      "Make the sauce: dice onion, mince garlic, grate ginger. Cook in 1 tbsp oil for 8 minutes. Add curry powder, cook 1 minute.",
+      "Add 400ml stock (cube + water), honey, and soy sauce. Simmer 15 minutes then blend until smooth.",
+      "Flatten chicken breasts slightly with a rolling pin. Set up three bowls: flour, beaten eggs, panko breadcrumbs.",
+      "Coat each chicken in flour, then egg, then panko. Press crumbs on firmly.",
+      "Heat remaining oil in a frying pan. Shallow fry chicken for 5 minutes each side until golden and cooked through.",
+      "Cook jasmine rice according to packet instructions.",
+      "Slice the chicken and serve over rice with the curry sauce poured over."
+    ]
+  }
+]

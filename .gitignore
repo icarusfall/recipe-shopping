@@ -1,0 +1,7 @@
+node_modules/
+api-key.txt
+*.lnk
+*.ico
+*.bat
+*.vbs
+*.ps1

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Shopping</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>What's for Dinner?</h1>
+    <p class="subtitle">Pick your recipes, we'll sort the shopping</p>
+  </header>
+
+  <main>
+    <!-- Profile Picker -->
+    <section id="profile-section">
+      <h2>Who's choosing tonight?</h2>
+      <div id="profile-grid"></div>
+      <button id="browse-all-btn" class="link-btn">Or browse all recipes</button>
+      <button id="saved-recipes-btn" class="link-btn">View saved recipes</button>
+      <button id="edit-profiles-btn" class="link-btn">Edit profiles</button>
+    </section>
+
+    <!-- This Week's Order -->
+    <section id="weekly-order-section">
+      <h2>This Week's Order</h2>
+      <div id="weekly-order-list"></div>
+      <p id="no-orders" style="color:#999;font-size:0.9rem">No recipes selected yet. Pick a recipe and add it to this week's order.</p>
+      <div id="weekly-order-actions" class="hidden">
+        <button id="view-weekly-shopping-btn" class="primary-btn">View combined shopping list</button>
+        <button id="clear-weekly-order" class="secondary-btn">Clear week</button>
+      </div>
+    </section>
+
+    <!-- Profile Editor -->
+    <section id="profile-editor" class="hidden">
+      <div class="suggestions-header">
+        <button id="back-from-editor" class="back-btn">&larr; Back</button>
+        <h2>Edit Profiles</h2>
+      </div>
+      <div id="profile-forms"></div>
+      <button id="save-profiles-btn" class="primary-btn">Save changes</button>
+      <div id="profile-save-status" class="hidden"></div>
+    </section>
+
+    <!-- Saved Recipes -->
+    <section id="saved-section" class="hidden">
+      <div class="suggestions-header">
+        <button id="back-from-saved" class="back-btn">&larr; Back</button>
+        <h2>Saved Recipes</h2>
+      </div>
+      <div id="saved-grid"></div>
+      <p id="no-saved" class="hidden" style="color:#999;text-align:center">No saved recipes yet. Choose a recipe and it'll appear here.</p>
+    </section>
+
+    <!-- Suggestions -->
+    <section id="suggestions-section" class="hidden">
+      <div class="suggestions-header">
+        <button id="back-to-profiles" class="back-btn">&larr; Back</button>
+        <h2 id="suggestions-title">What do you fancy?</h2>
+      </div>
+      <div id="suggestions-grid"></div>
+      <div id="suggestions-loading" class="hidden">
+        <div class="loader"></div>
+        <span>Thinking up some ideas...</span>
+      </div>
+      <div class="mood-form">
+        <input type="text" id="mood-input" placeholder="Not feeling any of these? Tell us what you're in the mood for...">
+        <button id="show-more-btn">Show me more</button>
+      </div>
+    </section>
+
+    <!-- Recipe Browser (curated list) -->
+    <section id="recipe-browser" class="hidden">
+      <div class="suggestions-header">
+        <button id="back-from-browse" class="back-btn">&larr; Back</button>
+        <h2>All Recipes</h2>
+      </div>
+      <div id="recipe-grid"></div>
+    </section>
+
+    <!-- Generate -->
+    <section id="generate-section" class="hidden">
+      <h2>Generate a Recipe</h2>
+      <div class="generate-form">
+        <input type="text" id="recipe-prompt" placeholder="Describe a recipe, e.g. 'a quick chicken stir fry'">
+        <button id="generate-btn">Generate</button>
+      </div>
+      <div id="generate-status" class="hidden"></div>
+    </section>
+
+    <!-- Ingredients -->
+    <section id="ingredient-section" class="hidden">
+      <div class="recipe-title-bar">
+        <h2><span id="recipe-emoji"></span> Ingredients for: <span id="selected-recipe-name"></span></h2>
+        <button id="add-to-weekly-btn" class="weekly-btn">+ This week's order</button>
+        <button id="print-recipe-btn" class="print-btn">🖨️ Print recipe</button>
+      </div>
+      <div id="selected-timing"></div>
+      <p class="serving-info">Serves <span id="selected-servings"></span></p>
+      <div id="ingredient-list"></div>
+      <div class="actions">
+        <button id="add-to-tesco-btn" class="primary-btn">Add all to Tesco Basket</button>
+        <div id="tesco-progress" class="hidden"></div>
+        <p id="no-extension-msg" class="hidden extension-hint">
+          Extension not detected. <a href="#" id="extension-help-link">Install the Chrome extension</a> to auto-add items to your Tesco basket.
+        </p>
+      </div>
+    </section>
+
+    <!-- Method -->
+    <section id="method-section" class="hidden">
+      <h2>👨‍🍳 Method</h2>
+      <ol id="method-list"></ol>
+      <div class="tweak-form">
+        <input type="text" id="tweak-input" placeholder="Tweak this recipe, e.g. 'swap the frozen chips for roast potatoes'">
+        <button id="tweak-btn">Update recipe</button>
+      </div>
+      <div id="tweak-status" class="hidden"></div>
+    </section>
+
+    <!-- Store Cupboard -->
+    <section id="cupboard-section">
+      <h2>Store Cupboard</h2>
+      <p class="cupboard-info">Items you've marked as "already have" will be auto-unchecked in future recipes.</p>
+      <div id="cupboard-items"></div>
+      <button id="clear-cupboard" class="secondary-btn">Clear all</button>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
