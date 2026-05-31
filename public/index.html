@@ -101,10 +101,11 @@
       <p class="serving-info">Serves <span id="selected-servings"></span></p>
       <div id="ingredient-list"></div>
       <div class="actions">
-        <button id="add-to-tesco-btn" class="primary-btn">Add all to Tesco Basket</button>
-        <div id="tesco-progress" class="hidden"></div>
+        <button class="primary-btn store-btn" data-store="tesco">Add all to Tesco Basket</button>
+        <button class="primary-btn store-btn waitrose-btn" data-store="waitrose">Add all to Waitrose Basket</button>
+        <div id="basket-progress" class="hidden"></div>
         <p id="no-extension-msg" class="hidden extension-hint">
-          Extension not detected. <a href="#" id="extension-help-link">Install the Chrome extension</a> to auto-add items to your Tesco basket.
+          Extension not detected. <a href="#" id="extension-help-link">Install the Chrome extension</a> to auto-add items to your basket.
         </p>
       </div>
     </section>

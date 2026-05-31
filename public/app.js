@@ -570,7 +570,7 @@ document.getElementById("tweak-input").addEventListener("keydown", (e) => {
   if (e.key === "Enter") document.getElementById("tweak-btn").click();
 });
 
-// ===== Tesco Extension =====
+// ===== Basket Extension (Tesco / Waitrose) =====
 function getCheckedSearchTerms() {
   const checked = document.querySelectorAll("#ingredient-list input[type=checkbox]:checked");
   return [...checked].map(cb => {
@@ -580,27 +580,31 @@ function getCheckedSearchTerms() {
   });
 }
 
-document.getElementById("add-to-tesco-btn").addEventListener("click", () => {
-  const items = getCheckedSearchTerms();
-  if (items.length === 0) return;
+document.querySelectorAll(".store-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const store = btn.dataset.store;
+    const items = getCheckedSearchTerms();
+    if (items.length === 0) return;
 
-  const hasExtension = document.documentElement.hasAttribute("data-tesco-extension");
-  if (!hasExtension) {
-    document.getElementById("no-extension-msg").classList.remove("hidden");
-    return;
-  }
+    const hasExtension = document.documentElement.hasAttribute("data-recipe-extension");
+    if (!hasExtension) {
+      document.getElementById("no-extension-msg").classList.remove("hidden");
+      return;
+    }
 
-  document.getElementById("tesco-progress").classList.remove("hidden");
-  document.getElementById("tesco-progress").textContent = "Starting...";
-  const recipeName = currentRecipe ? currentRecipe.name : "";
-  const allIngredients = currentRecipe ? currentRecipe.ingredients.map(i => i.name).join(", ") : "";
-  document.dispatchEvent(new CustomEvent("tesco-add-to-basket", {
-    detail: { items, recipeName, allIngredients }
-  }));
+    const progressEl = document.getElementById("basket-progress");
+    progressEl.classList.remove("hidden");
+    progressEl.textContent = "Starting...";
+    const recipeName = currentRecipe ? currentRecipe.name : "";
+    const allIngredients = currentRecipe ? currentRecipe.ingredients.map(i => i.name).join(", ") : "";
+    document.dispatchEvent(new CustomEvent("recipe-add-to-basket", {
+      detail: { store, items, recipeName, allIngredients }
+    }));
+  });
 });
 
-document.addEventListener("tesco-progress", (e) => {
-  const el = document.getElementById("tesco-progress");
+document.addEventListener("recipe-basket-progress", (e) => {
+  const el = document.getElementById("basket-progress");
   el.classList.remove("hidden");
   el.textContent = e.detail.text;
 });

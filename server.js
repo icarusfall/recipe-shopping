@@ -53,7 +53,8 @@ Return ONLY valid JSON matching this exact structure (no markdown, no explanatio
 }
 
 prepTime and cookTime are in minutes. Be realistic — include time for chopping, marinating, resting etc in prepTime.
-Use Tesco-friendly ingredient names (e.g. "400g tin chopped tomatoes" not "chopped tomatoes 400g"). Include realistic quantities. Keep it family-friendly and practical.`,
+Use Tesco-friendly ingredient names (e.g. "400g tin chopped tomatoes" not "chopped tomatoes 400g"). Include realistic quantities. Keep it family-friendly and practical.
+ALWAYS include at least one vegetable. If the requested dish has no vegetables (e.g. "burger and chips"), add a simple vegetable side dish — include its ingredients and add method steps for preparing it.`,
         },
       ],
     });

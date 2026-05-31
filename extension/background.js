@@ -1,8 +1,37 @@
-const TESCO_SEARCH = "https://www.tesco.com/groceries/en-GB/search?query=";
 const APP_ORIGIN = "http://localhost:3000";
 
+// Per-store config. titleSelectors and addButtonTexts are passed into the
+// injected page scripts, so they must stay JSON-serialisable (no functions).
+const STORES = {
+  tesco: {
+    name: "Tesco",
+    search: "https://www.tesco.com/groceries/en-GB/search?query=",
+    titleSelectors: [
+      'a[data-auto="product-tile--title"]',
+      'h3 a',
+      '[class*="product-tile"] a[href*="/products/"]',
+      '[class*="ProductTile"] a',
+      'a[href*="/products/"]',
+    ],
+    addButtonTexts: ["add", "add to basket"],
+  },
+  waitrose: {
+    name: "Waitrose",
+    search: "https://www.waitrose.com/ecom/shop/search?searchTerm=",
+    titleSelectors: [
+      'a[href*="/ecom/products/"]',
+      '[class*="podHeader"] a',
+      '[class*="productPod"] a[href*="/products/"]',
+      'h2 a',
+      'h3 a',
+    ],
+    addButtonTexts: ["add to trolley", "add"],
+  },
+};
+
 let appTabId = null;
-let tescoTabId = null;
+let storeTabId = null;
+let store = STORES.tesco;
 let items = [];
 let currentIndex = 0;
 let recipeName = "";
@@ -11,11 +40,12 @@ let allIngredients = "";
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === "START_ADDING") {
     appTabId = sender.tab.id;
+    store = STORES[msg.store] || STORES.tesco;
     items = msg.items;
     recipeName = msg.recipeName || "";
     allIngredients = msg.allIngredients || "";
     currentIndex = 0;
-    sendProgress("Starting...");
+    sendProgress(`Starting ${store.name} order...`);
     startAdding();
   }
 
@@ -36,38 +66,38 @@ function sendProgress(text) {
 
 async function startAdding() {
   if (currentIndex >= items.length) {
-    sendProgress("Done! All items processed.");
-    if (tescoTabId) {
-      chrome.tabs.update(tescoTabId, { active: true });
+    sendProgress(`Done! All items processed for ${store.name}.`);
+    if (storeTabId) {
+      chrome.tabs.update(storeTabId, { active: true });
     }
     return;
   }
 
   const item = items[currentIndex];
   const query = encodeURIComponent(item);
-  const url = TESCO_SEARCH + query;
+  const url = store.search + query;
 
   sendProgress(`Searching ${currentIndex + 1}/${items.length}: ${item}`);
 
-  if (!tescoTabId) {
+  if (!storeTabId) {
     const tab = await chrome.tabs.create({ url, active: false });
-    tescoTabId = tab.id;
+    storeTabId = tab.id;
     chrome.tabs.onRemoved.addListener(function onRemoved(tabId) {
-      if (tabId === tescoTabId) {
-        tescoTabId = null;
+      if (tabId === storeTabId) {
+        storeTabId = null;
         chrome.tabs.onRemoved.removeListener(onRemoved);
       }
     });
   } else {
-    await chrome.tabs.update(tescoTabId, { url });
+    await chrome.tabs.update(storeTabId, { url });
   }
 
   // Phase 1: Wait for page load, then scrape product names
-  waitForPageLoad(tescoTabId, () => {
+  waitForPageLoad(storeTabId, () => {
     chrome.scripting.executeScript({
-      target: { tabId: tescoTabId },
+      target: { tabId: storeTabId },
       func: scrapeProductNames,
-      args: [item],
+      args: [item, store.titleSelectors],
     });
   });
 }
@@ -82,8 +112,8 @@ function waitForPageLoad(tabId, callback) {
   chrome.tabs.onUpdated.addListener(listener);
 }
 
-// Injected into Tesco page - Phase 1: scrape product names
-function scrapeProductNames(itemName) {
+// Injected into the store page - Phase 1: scrape product names
+function scrapeProductNames(itemName, titleSelectors) {
   function isSponsored(el) {
     let node = el;
     for (let i = 0; i < 10 && node; i++) {
@@ -99,18 +129,9 @@ function scrapeProductNames(itemName) {
     return false;
   }
 
-  // Find product tiles - try various selectors
+  // Find product tiles using the store's title selectors
   const products = [];
   const seen = new Set();
-
-  // Look for product links/titles in the results
-  const titleSelectors = [
-    'a[data-auto="product-tile--title"]',
-    'h3 a',
-    '[class*="product-tile"] a[href*="/products/"]',
-    '[class*="ProductTile"] a',
-    'a[href*="/products/"]',
-  ];
 
   for (const sel of titleSelectors) {
     document.querySelectorAll(sel).forEach(el => {
@@ -127,7 +148,7 @@ function scrapeProductNames(itemName) {
   if (products.length === 0) {
     document.querySelectorAll("button").forEach(btn => {
       const text = btn.textContent.trim().toLowerCase();
-      if (text === "add" || text === "add to basket") {
+      if (text === "add" || text === "add to basket" || text === "add to trolley") {
         // Walk up to find the product container and its title
         let node = btn.parentElement;
         for (let i = 0; i < 8 && node; i++) {
@@ -186,14 +207,14 @@ async function handleScrapeResult(products, item) {
 
   // Phase 3: Inject script to click the correct product's Add button
   chrome.scripting.executeScript({
-    target: { tabId: tescoTabId },
+    target: { tabId: storeTabId },
     func: addProductByIndex,
-    args: [bestIndex, item],
+    args: [bestIndex, item, store.addButtonTexts],
   });
 }
 
-// Injected into Tesco page - Phase 3: click Add on the chosen product
-function addProductByIndex(targetIndex, itemName) {
+// Injected into the store page - Phase 3: click Add on the chosen product
+function addProductByIndex(targetIndex, itemName, addButtonTexts) {
   function isSponsored(el) {
     let node = el;
     for (let i = 0; i < 10 && node; i++) {
@@ -216,7 +237,7 @@ function addProductByIndex(targetIndex, itemName) {
   for (const btn of allButtons) {
     const text = btn.textContent.trim().toLowerCase();
     const ariaLabel = (btn.getAttribute("aria-label") || "").toLowerCase();
-    const isAdd = text === "add" || text === "add to basket" ||
+    const isAdd = addButtonTexts.includes(text) ||
                   ariaLabel.includes("add") ||
                   btn.getAttribute("data-auto") === "btnAddToBasket";
 

@@ -353,6 +353,12 @@ button:active { transform: scale(0.97); }
 
 .primary-btn:hover { opacity: 0.9; }
 
+.store-btn { margin: 6px; }
+
+.waitrose-btn {
+  background: linear-gradient(135deg, #6f9c2f, #5a8226);
+}
+
 .secondary-btn { background: #e8e8e8; color: #555; margin-top: 10px; }
 .secondary-btn:hover { background: #ddd; }
 
@@ -575,8 +581,8 @@ button:active { transform: scale(0.97); }
 
 .cupboard-tag button:hover { color: #c00; }
 
-/* ===== Tesco Progress ===== */
-#tesco-progress {
+/* ===== Basket Progress ===== */
+#basket-progress {
   margin-top: 12px;
   padding: 12px;
   border-radius: 14px;

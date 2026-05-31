@@ -3,7 +3,8 @@
     "allow": [
       "Bash(curl:*)",
       "Bash(gh auth:*)",
-      "Bash(gh:*)"
+      "Bash(gh:*)",
+      "WebSearch"
     ]
   }
 }
