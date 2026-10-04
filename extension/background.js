@@ -1,270 +1,272 @@
 const APP_ORIGIN = "http://localhost:3000";
 
-// Per-store config. titleSelectors and addButtonTexts are passed into the
-// injected page scripts, so they must stay JSON-serialisable (no functions).
+// Per-store config. Everything in here is passed into injected page scripts,
+// so it must stay JSON-serialisable (no functions).
+//   tileSelector   - one element per product (optional; otherwise we walk up
+//                    from each Add button to the smallest container holding it)
+//   addSelector    - the "add to basket/trolley" button inside a tile
+//   nameAttr       - attribute on the tile holding the clean product name
+//   sponsoredSelector - tiles matching this are paid placements
 const STORES = {
   tesco: {
     name: "Tesco",
     search: "https://www.tesco.com/groceries/en-GB/search?query=",
-    titleSelectors: [
-      'a[data-auto="product-tile--title"]',
-      'h3 a',
-      '[class*="product-tile"] a[href*="/products/"]',
-      '[class*="ProductTile"] a',
-      'a[href*="/products/"]',
-    ],
-    addButtonTexts: ["add", "add to basket"],
+    tileSelector: null,
+    addSelector: 'button[data-auto="btnAddToBasket"], button[type="submit"]',
+    addTexts: ["add", "add to basket"],
+    nameSelector: 'a[href*="/products/"]',
+    nameAttr: null,
+    sponsoredSelector: '[data-auto*="sponsored" i], [class*="sponsored" i]',
   },
   waitrose: {
     name: "Waitrose",
     search: "https://www.waitrose.com/ecom/shop/search?searchTerm=",
-    titleSelectors: [
-      'a[href*="/ecom/products/"]',
-      '[class*="podHeader"] a',
-      '[class*="productPod"] a[href*="/products/"]',
-      'h2 a',
-      'h3 a',
-    ],
-    addButtonTexts: ["add to trolley", "add"],
+    tileSelector: 'article[data-testid="product-pod"]',
+    addSelector: 'button[data-testid="addButton"]',
+    addTexts: ["add", "add to trolley"],
+    nameSelector: '[data-testid="product-pod-name"], a[href*="/ecom/products/"]',
+    nameAttr: "data-product-name",
+    sponsoredSelector: '[data-product-pod-type="sponsored"]',
   },
 };
 
+const MAX_PRODUCTS = 12;
+
 let appTabId = null;
 let storeTabId = null;
-let store = STORES.tesco;
-let items = [];
-let currentIndex = 0;
-let recipeName = "";
-let allIngredients = "";
+let running = false;
 
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((msg, sender) => {
   if (msg.type === "START_ADDING") {
+    if (running) {
+      sendProgress("Already adding items — please wait for the current run to finish.", sender.tab.id);
+      return;
+    }
     appTabId = sender.tab.id;
-    store = STORES[msg.store] || STORES.tesco;
-    items = msg.items;
-    recipeName = msg.recipeName || "";
-    allIngredients = msg.allIngredients || "";
-    currentIndex = 0;
-    sendProgress(`Starting ${store.name} order...`);
-    startAdding();
-  }
-
-  if (msg.type === "SCRAPE_RESULT") {
-    handleScrapeResult(msg.products, msg.item);
-  }
-
-  if (msg.type === "ADD_RESULT") {
-    handleAddResult(msg.success, msg.item);
+    const store = STORES[msg.store] || STORES.tesco;
+    runOrder(store, msg.items, msg.recipeName || "", msg.allIngredients || "");
   }
 });
 
-function sendProgress(text) {
-  if (appTabId) {
-    chrome.tabs.sendMessage(appTabId, { type: "PROGRESS", text });
+function sendProgress(text, tabId = appTabId) {
+  if (tabId) chrome.tabs.sendMessage(tabId, { type: "PROGRESS", text });
+}
+
+async function runOrder(store, items, recipeName, allIngredients) {
+  running = true;
+  sendProgress(`Starting ${store.name} order...`);
+  const skipped = [];
+  try {
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      const pos = `${i + 1}/${items.length}`;
+      try {
+        const added = await addItem(store, item, pos, recipeName, allIngredients);
+        if (!added) skipped.push(item);
+      } catch (err) {
+        console.error(`Failed on ${item}:`, err);
+        sendProgress(`Problem with ${item} (${pos}) - skipping`);
+        skipped.push(item);
+      }
+      await sleep(800);
+    }
+    sendProgress(
+      skipped.length
+        ? `Done! Skipped ${skipped.length}: ${skipped.join(", ")} — add these by hand.`
+        : `Done! All items added to your ${store.name} basket.`
+    );
+    if (storeTabId) chrome.tabs.update(storeTabId, { active: true });
+  } finally {
+    running = false;
   }
 }
 
-async function startAdding() {
-  if (currentIndex >= items.length) {
-    sendProgress(`Done! All items processed for ${store.name}.`);
-    if (storeTabId) {
-      chrome.tabs.update(storeTabId, { active: true });
-    }
-    return;
-  }
+async function addItem(store, item, pos, recipeName, allIngredients) {
+  sendProgress(`Searching ${pos}: ${item}`);
+  await openSearch(store.search + encodeURIComponent(item));
 
-  const item = items[currentIndex];
-  const query = encodeURIComponent(item);
-  const url = store.search + query;
-
-  sendProgress(`Searching ${currentIndex + 1}/${items.length}: ${item}`);
-
-  if (!storeTabId) {
-    const tab = await chrome.tabs.create({ url, active: false });
-    storeTabId = tab.id;
-    chrome.tabs.onRemoved.addListener(function onRemoved(tabId) {
-      if (tabId === storeTabId) {
-        storeTabId = null;
-        chrome.tabs.onRemoved.removeListener(onRemoved);
-      }
-    });
-  } else {
-    await chrome.tabs.update(storeTabId, { url });
-  }
-
-  // Phase 1: Wait for page load, then scrape product names
-  waitForPageLoad(storeTabId, () => {
-    chrome.scripting.executeScript({
-      target: { tabId: storeTabId },
-      func: scrapeProductNames,
-      args: [item, store.titleSelectors],
-    });
+  // Phase 1: scrape non-sponsored product tiles (waits for results to render)
+  const [{ result: products }] = await chrome.scripting.executeScript({
+    target: { tabId: storeTabId },
+    func: scrapeProducts,
+    args: [store, MAX_PRODUCTS],
   });
-}
 
-function waitForPageLoad(tabId, callback) {
-  function listener(updatedTabId, changeInfo) {
-    if (updatedTabId === tabId && changeInfo.status === "complete") {
-      chrome.tabs.onUpdated.removeListener(listener);
-      setTimeout(callback, 2000);
-    }
-  }
-  chrome.tabs.onUpdated.addListener(listener);
-}
-
-// Injected into the store page - Phase 1: scrape product names
-function scrapeProductNames(itemName, titleSelectors) {
-  function isSponsored(el) {
-    let node = el;
-    for (let i = 0; i < 10 && node; i++) {
-      const cls = node.className || "";
-      const attrs = node.outerHTML ? node.outerHTML.substring(0, 500) : "";
-      if (/sponsored|promoted|ad\b/i.test(cls) || /sponsored|promoted/i.test(attrs)) return true;
-      const labels = node.querySelectorAll ? node.querySelectorAll("span, div, p") : [];
-      for (const lbl of labels) {
-        if (/^sponsored$/i.test(lbl.textContent.trim())) return true;
-      }
-      node = node.parentElement;
-    }
+  if (!products || products.length === 0) {
+    sendProgress(`No products found for: ${item} (${pos}) - skipping`);
     return false;
   }
 
-  // Find product tiles using the store's title selectors
-  const products = [];
-  const seen = new Set();
-
-  for (const sel of titleSelectors) {
-    document.querySelectorAll(sel).forEach(el => {
-      const name = el.textContent.trim();
-      if (name && !seen.has(name) && !isSponsored(el)) {
-        seen.add(name);
-        products.push(name);
-      }
-    });
-    if (products.length >= 8) break;
-  }
-
-  // Fallback: grab any heading-ish text near add buttons
-  if (products.length === 0) {
-    document.querySelectorAll("button").forEach(btn => {
-      const text = btn.textContent.trim().toLowerCase();
-      if (text === "add" || text === "add to basket" || text === "add to trolley") {
-        // Walk up to find the product container and its title
-        let node = btn.parentElement;
-        for (let i = 0; i < 8 && node; i++) {
-          const heading = node.querySelector("h2, h3, a[href*='/products/']");
-          if (heading) {
-            const name = heading.textContent.trim();
-            if (name && !seen.has(name) && !isSponsored(btn)) {
-              seen.add(name);
-              products.push(name);
-            }
-            break;
-          }
-          node = node.parentElement;
-        }
-      }
-    });
-  }
-
-  chrome.runtime.sendMessage({
-    type: "SCRAPE_RESULT",
-    products: products.slice(0, 8),
-    item: itemName,
-  });
-}
-
-// Phase 2: Ask Claude to pick the best product, then click it
-async function handleScrapeResult(products, item) {
-  if (!products || products.length === 0) {
-    sendProgress(`No products found for: ${item} (${currentIndex + 1}/${items.length}) - skipping`);
-    currentIndex++;
-    setTimeout(() => startAdding(), 500);
-    return;
-  }
-
-  // If only one non-sponsored product, just pick it
-  let bestIndex = 0;
-
+  // Phase 2: ask Claude which product best fits the recipe
+  let pick = { index: 0, reason: "" };
   if (products.length > 1) {
-    sendProgress(`Picking best match ${currentIndex + 1}/${items.length}: ${item}...`);
+    sendProgress(`Picking best match ${pos}: ${item}...`);
     try {
       const res = await fetch(`${APP_ORIGIN}/api/pick-product`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ingredient: item, products, recipeName, allIngredients }),
+        body: JSON.stringify({
+          ingredient: item,
+          products: products.map(({ name, details }) => ({ name, details })),
+          recipeName,
+          allIngredients,
+          storeName: store.name,
+        }),
       });
-      const data = await res.json();
-      bestIndex = data.index;
-      if (bestIndex < 0 || bestIndex >= products.length) bestIndex = 0;
+      pick = await res.json();
     } catch (err) {
       console.error("Failed to call pick-product API:", err);
-      bestIndex = 0;
     }
   }
 
-  sendProgress(`Adding ${currentIndex + 1}/${items.length}: ${products[bestIndex]}`);
+  if (pick.index === -1) {
+    sendProgress(`No good match for ${item} (${pos}) - skipping. ${pick.reason || ""}`);
+    return false;
+  }
+  const chosen = products[pick.index] || products[0];
+  sendProgress(`Adding ${pos}: ${chosen.name}${pick.reason ? ` — ${pick.reason}` : ""}`);
 
-  // Phase 3: Inject script to click the correct product's Add button
-  chrome.scripting.executeScript({
+  // Phase 3: click the Add button we tagged on that exact tile
+  const [{ result: clicked }] = await chrome.scripting.executeScript({
     target: { tabId: storeTabId },
-    func: addProductByIndex,
-    args: [bestIndex, item, store.addButtonTexts],
+    func: clickTaggedButton,
+    args: [chosen.pickId],
+  });
+
+  if (!clicked) {
+    sendProgress(`Could not add: ${item} (${pos}) - skipping`);
+    return false;
+  }
+  await sleep(1500); // let the basket update before navigating away
+  sendProgress(`Added: ${chosen.name} (${pos})`);
+  return true;
+}
+
+async function openSearch(url) {
+  if (storeTabId) {
+    try {
+      await chrome.tabs.get(storeTabId);
+    } catch {
+      storeTabId = null; // user closed the tab
+    }
+  }
+  const loaded = storeTabId ? waitForPageLoad(storeTabId) : null;
+  if (!storeTabId) {
+    const tab = await chrome.tabs.create({ url, active: false });
+    storeTabId = tab.id;
+    await waitForPageLoad(storeTabId);
+  } else {
+    await chrome.tabs.update(storeTabId, { url });
+    await loaded;
+  }
+}
+
+function waitForPageLoad(tabId, timeoutMs = 20000) {
+  return new Promise((resolve) => {
+    const timer = setTimeout(done, timeoutMs);
+    function listener(updatedTabId, changeInfo) {
+      if (updatedTabId === tabId && changeInfo.status === "complete") done();
+    }
+    function done() {
+      clearTimeout(timer);
+      chrome.tabs.onUpdated.removeListener(listener);
+      resolve();
+    }
+    chrome.tabs.onUpdated.addListener(listener);
   });
 }
 
-// Injected into the store page - Phase 3: click Add on the chosen product
-function addProductByIndex(targetIndex, itemName, addButtonTexts) {
-  function isSponsored(el) {
-    let node = el;
-    for (let i = 0; i < 10 && node; i++) {
-      const cls = node.className || "";
-      const attrs = node.outerHTML ? node.outerHTML.substring(0, 500) : "";
-      if (/sponsored|promoted|ad\b/i.test(cls) || /sponsored|promoted/i.test(attrs)) return true;
-      const labels = node.querySelectorAll ? node.querySelectorAll("span, div, p") : [];
-      for (const lbl of labels) {
-        if (/^sponsored$/i.test(lbl.textContent.trim())) return true;
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+// Injected into the store page. Finds product tiles in page order, drops
+// sponsored and unavailable ones, and tags each kept tile's Add button with
+// data-recipe-pick so phase 3 clicks exactly the product Claude chose.
+async function scrapeProducts(cfg, maxProducts) {
+  const clean = (s) => (s || "").replace(/\s+/g, " ").trim();
+
+  function isAddButton(btn) {
+    if (!btn.matches(cfg.addSelector)) return false;
+    if (btn.getAttribute("data-auto") === "btnAddToBasket" || btn.getAttribute("data-testid") === "addButton") return true;
+    const text = clean(btn.textContent).toLowerCase();
+    const aria = (btn.getAttribute("aria-label") || "").toLowerCase();
+    if (/favourite|list|wishlist/.test(aria)) return false;
+    return cfg.addTexts.includes(text) || /^add\b/.test(aria);
+  }
+
+  function findTiles() {
+    if (cfg.tileSelector) return [...document.querySelectorAll(cfg.tileSelector)];
+    // Walk up from each Add button to the largest ancestor that still holds
+    // only that one Add button — that's the product tile.
+    const buttons = [...document.querySelectorAll("button")].filter(isAddButton);
+    return buttons.map((btn) => {
+      let tile = btn;
+      while (tile.parentElement && tile.parentElement !== document.body) {
+        const addsInParent = [...tile.parentElement.querySelectorAll("button")].filter(isAddButton).length;
+        if (addsInParent > 1) break;
+        tile = tile.parentElement;
       }
-      node = node.parentElement;
+      return tile;
+    });
+  }
+
+  function isSponsored(tile) {
+    if (cfg.sponsoredSelector && (tile.matches(cfg.sponsoredSelector) || tile.querySelector(cfg.sponsoredSelector))) return true;
+    // Visible "Sponsored" / "Ad" badge anywhere inside this tile only
+    for (const el of tile.querySelectorAll("span, div, p, small, strong")) {
+      if (el.children.length === 0 && /^(sponsored|sponsored product|promoted|ad)$/i.test(clean(el.textContent))) return true;
     }
     return false;
   }
 
-  // Find product containers with Add buttons, skipping sponsored
-  const addButtons = [];
-  const allButtons = document.querySelectorAll("button");
+  // Results render client-side; poll until tiles with Add buttons appear.
+  let tiles = [];
+  for (let waited = 0; waited < 12000; waited += 500) {
+    tiles = findTiles().filter((t) => [...t.querySelectorAll("button")].some(isAddButton));
+    if (tiles.length > 0) break;
+    await new Promise((r) => setTimeout(r, 500));
+  }
+  await new Promise((r) => setTimeout(r, 500)); // let the rest of the grid settle
+  tiles = findTiles().filter((t) => [...t.querySelectorAll("button")].some(isAddButton));
 
-  for (const btn of allButtons) {
-    const text = btn.textContent.trim().toLowerCase();
-    const ariaLabel = (btn.getAttribute("aria-label") || "").toLowerCase();
-    const isAdd = addButtonTexts.includes(text) ||
-                  ariaLabel.includes("add") ||
-                  btn.getAttribute("data-auto") === "btnAddToBasket";
+  document.querySelectorAll("[data-recipe-pick]").forEach((el) => el.removeAttribute("data-recipe-pick"));
 
-    if (isAdd && !isSponsored(btn)) {
-      addButtons.push(btn);
+  const products = [];
+  for (const tile of tiles) {
+    if (products.length >= maxProducts) break;
+    if (isSponsored(tile)) continue;
+    const button = [...tile.querySelectorAll("button")].find(isAddButton);
+    if (!button || button.disabled) continue;
+
+    let name = cfg.nameAttr ? tile.getAttribute(cfg.nameAttr) : "";
+    if (!name) {
+      const link = [...tile.querySelectorAll(cfg.nameSelector)].find((a) => clean(a.textContent));
+      name = link ? clean(link.textContent) : "";
     }
-  }
+    if (!name) continue;
 
-  const button = addButtons[targetIndex] || addButtons[0];
+    // Size, price, offers etc. — the tile's visible text minus UI noise
+    const details = clean(tile.innerText)
+      .replace(/view product details for/gi, "")
+      .replace(name, "")
+      .replace(/\b(add|quantity controls|more like this|favourite)\b/gi, "")
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, 160);
 
-  if (button) {
-    button.click();
-    setTimeout(() => {
-      chrome.runtime.sendMessage({ type: "ADD_RESULT", success: true, item: itemName });
-    }, 1500);
-  } else {
-    chrome.runtime.sendMessage({ type: "ADD_RESULT", success: false, item: itemName });
+    const pickId = String(products.length);
+    button.setAttribute("data-recipe-pick", pickId);
+    products.push({ pickId, name, details });
   }
+  return products;
 }
 
-function handleAddResult(success, item) {
-  if (success) {
-    sendProgress(`Added: ${item} (${currentIndex + 1}/${items.length})`);
-  } else {
-    sendProgress(`Could not add: ${item} (${currentIndex + 1}/${items.length}) - skipping`);
-  }
-
-  currentIndex++;
-  setTimeout(() => startAdding(), 1000);
+// Injected into the store page - phase 3
+function clickTaggedButton(pickId) {
+  const button = document.querySelector(`button[data-recipe-pick="${pickId}"]`);
+  if (!button) return false;
+  button.scrollIntoView({ block: "center" });
+  button.click();
+  return true;
 }

@@ -596,7 +596,10 @@ document.querySelectorAll(".store-btn").forEach(btn => {
     progressEl.classList.remove("hidden");
     progressEl.textContent = "Starting...";
     const recipeName = currentRecipe ? currentRecipe.name : "";
-    const allIngredients = currentRecipe ? currentRecipe.ingredients.map(i => i.name).join(", ") : "";
+    // Include quantities so the product picker can choose a sensible pack size
+    const allIngredients = currentRecipe
+      ? currentRecipe.ingredients.map(i => [i.quantity, i.unit, i.name].filter(Boolean).join(" ")).join(", ")
+      : "";
     document.dispatchEvent(new CustomEvent("recipe-add-to-basket", {
       detail: { store, items, recipeName, allIngredients }
     }));
